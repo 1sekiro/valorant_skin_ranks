@@ -9,5 +9,5 @@
               type="javax.sql.DataSource"
               username="root"
               password="mypassword"
-              url="jdbc:mysql://localhost:3306/skindb"/>
+              url="jdbc:mysql://172.26.144.22:3306/skindb"/>
 </Context>
