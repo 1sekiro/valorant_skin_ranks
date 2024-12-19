@@ -7,6 +7,7 @@ CREATE DATABASE skindb;
 -- Use the database
 USE skindb;
 
+
 -- Create Weapon Table
 CREATE TABLE weapon (
                         weapon_id INT AUTO_INCREMENT PRIMARY KEY,
