@@ -63,7 +63,7 @@ public class parseWeapon {
                 String weaponIcon = weaponNode.optString("displayIcon", null);
 
                 // Insert weapon into the Weapon table
-                String weaponInsertQuery = "INSERT IGNORE INTO Weapon (weapon_name) VALUES (?)";
+                String weaponInsertQuery = "INSERT IGNORE INTO weapon (weapon_name) VALUES (?)";
                 try (PreparedStatement weaponStmt = connection.prepareStatement(weaponInsertQuery, PreparedStatement.RETURN_GENERATED_KEYS)) {
                     weaponStmt.setString(1, weaponName);
                     weaponStmt.executeUpdate();
@@ -84,7 +84,7 @@ public class parseWeapon {
                             String skinIcon = skinNode.optString("displayIcon", null);
 
                             // Insert skin into the Skin table
-                            String skinInsertQuery = "INSERT INTO Skin (skin_name, weapon_id, icon) VALUES (?, ?, ?)";
+                            String skinInsertQuery = "INSERT INTO skin (skin_name, weapon_id, icon) VALUES (?, ?, ?)";
                             try (PreparedStatement skinStmt = connection.prepareStatement(skinInsertQuery)) {
                                 skinStmt.setString(1, skinName);
                                 skinStmt.setInt(2, weaponId);
