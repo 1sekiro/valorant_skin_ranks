@@ -35,7 +35,7 @@ public class SkinsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT skin_name, price, vote_count, icon FROM skin";
+            String query = "SELECT skin_name, vote_count, icon FROM skin";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
 
@@ -44,7 +44,6 @@ public class SkinsServlet extends HttpServlet {
             while (rs.next()) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("skin_name", rs.getString("skin_name"));
-                jsonObject.addProperty("price", rs.getInt("price"));
                 jsonObject.addProperty("vote_count", rs.getInt("vote_count"));
                 jsonObject.addProperty("icon", rs.getString("icon"));
                 jsonArray.add(jsonObject);

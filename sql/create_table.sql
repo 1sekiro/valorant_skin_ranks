@@ -14,12 +14,32 @@ CREATE TABLE weapon (
                         weapon_name VARCHAR(255) NOT NULL UNIQUE
 );
 
+INSERT INTO weapon (weapon_name) VALUES
+                                     ('classic'),
+                                     ('shorty'),
+                                     ('frenzy'),
+                                     ('ghost'),
+                                     ('sheriff'),
+                                     ('stinger'),
+                                     ('spectre'),
+                                     ('bucky'),
+                                     ('judge'),
+                                     ('bulldog'),
+                                     ('guardian'),
+                                     ('phantom'),
+                                     ('vandal'),
+                                     ('melee'),
+                                     ('marshal'),
+                                     ('outlaw'),
+                                     ('operator'),
+                                     ('ares'),
+                                     ('odin');
+
 -- Create Skin Table
 CREATE TABLE skin (
                       skin_id INT AUTO_INCREMENT PRIMARY KEY,
                       skin_name VARCHAR(255) NOT NULL,
                       weapon_id INT NOT NULL,
-                      price INT NOT NULL DEFAULT 0, -- 0 for free skins
                       vote_count INT DEFAULT 0,
                       icon VARCHAR(255), -- URL for skin image
                       FOREIGN KEY (weapon_id) REFERENCES weapon(weapon_id)

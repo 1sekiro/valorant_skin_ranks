@@ -12,7 +12,6 @@ $(document).ready(() => {
                     <tr>
                         <td><img src="${skin.icon}" alt="${skin.skin_name}" style="width:100px; height:auto;"></td>
                         <td>${skin.skin_name}</td>
-                        <td>${skin.price}</td>
                         <td>${skin.vote_count}</td>
                     </tr>
                 `;

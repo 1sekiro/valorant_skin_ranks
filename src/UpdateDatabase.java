@@ -12,13 +12,15 @@ import java.util.Map;
 
 public class UpdateDatabase {
 
-    // Database configuration
-    private static final String DB_URL = "jdbc:mysql://172.26.144.22:3306/skindb"; // Update to your database URL
-    private static final String DB_USER = "root"; // Update to your database username
-    private static final String DB_PASSWORD = "mypassword"; // Update to your database password
+    // Database
+    //private static final String DB_URL = "jdbc:mysql://172.26.144.22:3306/skindb";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/skindb";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "mypassword";
 
     public static void main(String[] args) {
         Map<String, String> manualSkins = new HashMap<>();
+        manualSkins.put("Altitude Odin", "https://media.valorant-api.com/weaponskinlevels/578e9077-4f88-260c-e54c-b988425c60e4/displayicon.png");
         manualSkins.put("Nitro Odin", "https://valorantstrike.com/wp-content/uploads/2021/09/Valorant-Nitro-Collection-Odin-HD.jpg");
         manualSkins.put("Snowfall Ares", "https://valorantstrike.com/wp-content/uploads/Valorant-Snowfall-Collection-Ares-HD.jpg");
         manualSkins.put("Aristocrat Vandal", "https://valorantstrike.com/wp-content/uploads/2020/06/Valorant-Aristocrat-Vandal.jpg");
@@ -45,8 +47,6 @@ public class UpdateDatabase {
         manualSkins.put("Final Chamber Classic", "https://valorantskins.com/img/skins/classic/final-chamber-classic-skin.png");
 
         try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-            System.out.println("Connected to the database.");
-
             for (Map.Entry<String, String> entry : manualSkins.entrySet()) {
                 String skinName = entry.getKey();
                 String iconUrl = entry.getValue();

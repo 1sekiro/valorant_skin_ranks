@@ -14,7 +14,6 @@
         <tr>
             <th>Icon</th>
             <th>Skin Name</th>
-            <th>Price (VP)</th>
             <th>Vote Count</th>
         </tr>
         </thead>
