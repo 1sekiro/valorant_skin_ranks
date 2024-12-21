@@ -1,7 +1,7 @@
 $(document).ready(() => {
     // Fetch skin data from the servlet
     $.ajax({
-        url: "/valorant-skin-ranks/api/skins",
+        url: "/valorant-skin-ranks/api/rank",
         method: "GET",
         success: function (data) {
             const tableBody = $("#skin_table_body");
@@ -12,7 +12,7 @@ $(document).ready(() => {
                     <tr>
                         <td><img src="${skin.icon}" alt="${skin.skin_name}" style="width:100px; height:auto;"></td>
                         <td>${skin.skin_name}</td>
-                        <td>${skin.vote_count}</td>
+                        <td>${skin.win_num}</td>
                     </tr>
                 `;
                 tableBody.append(row);

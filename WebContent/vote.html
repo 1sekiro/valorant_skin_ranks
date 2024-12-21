@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="vote.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="vote.js"></script>
+    <title>Skin Vote</title>
+</head>
+<body>
+<header>
+    <div id="nav-buttons">
+        <button id="vote-button">Vote</button>
+        <button id="rank-button">Rank</button>
+    </div>
+</header>
+<h1>Vote for Your Favorite Skin</h1>
+<div id="filter-container">
+    <button id="filter-button">Filter by Weapon</button>
+    <select id="weapon-select" style="display: none;">
+        <option value="" selected>All Weapons (Random)</option>
+        <option value="Classic">Classic</option>
+        <option value="Shorty">Shorty</option>
+        <option value="Frenzy">Frenzy</option>
+        <option value="Ghost">Ghost</option>
+        <option value="Sheriff">Sheriff</option>
+        <option value="Stinger">Stinger</option>
+        <option value="Spectre">Spectre</option>
+        <option value="Bucky">Bucky</option>
+        <option value="Judge">Judge</option>
+        <option value="Bulldog">Bulldog</option>
+        <option value="Guardian">Guardian</option>
+        <option value="Phantom">Phantom</option>
+        <option value="Vandal">Vandal</option>
+        <option value="Marshal">Marshal</option>
+        <option value="Outlaw">Outlaw</option>
+        <option value="Operator">Operator</option>
+        <option value="Ares">Ares</option>
+        <option value="Odin">Odin</option>
+        <option value="Melee">Melee</option>
+    </select>
+</div>
+<div id="vote-container">
+    <div id="skin1">
+        <img id="skin1-icon" src="" alt="Skin 1" />
+        <p id="skin1-name">Skin 1 Name</p> <!-- Placeholder for skin name -->
+        <button id="vote-skin1">Vote</button>
+    </div>
+
+    <div id="skin2">
+        <img id="skin2-icon" src="" alt="Skin 2" />
+        <p id="skin2-name">Skin 2 Name</p> <!-- Placeholder for skin name -->
+        <button id="vote-skin2">Vote</button>
+    </div>
+
+</div>
+</body>
+</html>

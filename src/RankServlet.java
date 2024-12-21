@@ -15,8 +15,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-@WebServlet(name = "SkinsServlet", urlPatterns = "/api/skins")
-public class SkinsServlet extends HttpServlet {
+@WebServlet(name = "RankServlet", urlPatterns = "/api/rank")
+public class RankServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private DataSource dataSource;
@@ -35,7 +35,8 @@ public class SkinsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT skin_name, vote_count, icon FROM skin";
+            // Modified query to include ORDER BY win_num DESC
+            String query = "SELECT skin_name, win_num, icon FROM skin ORDER BY win_num DESC";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
 
@@ -44,7 +45,7 @@ public class SkinsServlet extends HttpServlet {
             while (rs.next()) {
                 JsonObject jsonObject = new JsonObject();
                 jsonObject.addProperty("skin_name", rs.getString("skin_name"));
-                jsonObject.addProperty("vote_count", rs.getInt("vote_count"));
+                jsonObject.addProperty("win_num", rs.getInt("win_num"));
                 jsonObject.addProperty("icon", rs.getString("icon"));
                 jsonArray.add(jsonObject);
             }

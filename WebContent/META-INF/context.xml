@@ -10,5 +10,4 @@
               username="root"
               password="mypassword"
               url="jdbc:mysql://localhost:3306/skindb"/>
-                url="jdbc:mysql://localhost:3306/skindb"/>
 </Context>

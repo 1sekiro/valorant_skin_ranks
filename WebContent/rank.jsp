@@ -14,7 +14,7 @@
         <tr>
             <th>Icon</th>
             <th>Skin Name</th>
-            <th>Vote Count</th>
+            <th>Wins</th>
         </tr>
         </thead>
         <tbody id="skin_table_body">
@@ -23,6 +23,6 @@
     </table>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="skins.js"></script>
+<script src="rank.js"></script>
 </body>
 </html>
