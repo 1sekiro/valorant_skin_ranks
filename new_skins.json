@@ -34,24 +34,7 @@
         "weapon": "Ares",
         "image_url": "https://valorantinfo.gg/wp-content/uploads/2021/10/valorant-celestial-ares-skin.png"
     },
-    {
-        "name": "RGX 11z Pro Vandal Level 5 (Red)",
-        "weapon": "Vandal",
-        "variants": [
-            {
-                "color": "Red",
-                "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-vandal-level-5variant-1-red_valorant_full_skin_154300.webp"
-            },
-            {
-                "color": "Blue",
-                "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-vandal-level-5variant-2-blue_valorant_full_skin_154301.webp"
-            },
-            {
-                "color": "Yellow",
-                "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-vandal-level-5variant-3-yellow_valorant_full_skin_154302.webp"
-            }
-        ]
-    },
+
     {
         "name": "Altitude Vandal",
         "weapon": "Vandal",
