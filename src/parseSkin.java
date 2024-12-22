@@ -108,10 +108,14 @@ public class parseSkin {
     }
 
     private static String cleanChromaName(String chromaName) {
-        if (chromaName.contains("(Variant")) {
-            return chromaName.replaceAll("\\(Variant \\d+ (.*?)\\)", "($1)").trim();
-        }
-        return chromaName.trim();
+        String cleaned = chromaName.replaceAll("Level \\d+", "").trim();
+        // Handle Variant n Color format
+        cleaned = cleaned.replaceAll("\\(Variant \\d+ (.*?)\\)", "($1)").trim();
+        // Remove any double spaces
+        cleaned = cleaned.replaceAll("\\s+", " ").trim();
+        // Remove empty parentheses if any
+        cleaned = cleaned.replaceAll("\\(\\)", "").trim();
+        return cleaned;
     }
 
     private static int fetchWeaponId(Connection connection, String weaponName) throws SQLException {

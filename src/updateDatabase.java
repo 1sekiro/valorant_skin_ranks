@@ -33,7 +33,7 @@ public class updateDatabase {
 
         for (int i = 0; i < skinsArray.length(); i++) {
             JSONObject skinNode = skinsArray.getJSONObject(i);
-            String skinName = skinNode.optString("name", "");
+            String skinName = cleanSkinName(skinNode.optString("name", ""));
             String weaponName = skinNode.optString("weapon", null);
             String imageUrl = skinNode.optString("image_url", null);
 
@@ -42,9 +42,11 @@ public class updateDatabase {
                 continue;
             }
 
+            // Convert weapon name to lowercase for consistent comparison
+            weaponName = weaponName.toLowerCase();
+
             int weaponId = fetchWeaponId(connection, weaponName);
 
-            // If no image URL is present, check for variants
             if (imageUrl == null) {
                 JSONArray variants = skinNode.optJSONArray("variants");
                 if (variants == null || variants.length() == 0) {
@@ -59,23 +61,58 @@ public class updateDatabase {
 
                     if (variantImageUrl != null) {
                         String variantName = skinName + " (" + variantColor + ")";
-                        insertSkin(connection, variantName, weaponId, variantImageUrl);
+                        insertSkin(connection, cleanSkinName(variantName), weaponId, variantImageUrl);
                     }
                 }
             } else {
-                // Insert the main skin entry if it has an image URL
                 insertSkin(connection, skinName, weaponId, imageUrl);
             }
         }
     }
 
+    private static String cleanSkinName(String skinName) {
+        // Remove Level n
+        String cleaned = skinName.replaceAll("Level \\d+", "").trim();
+        // Handle Variant n Color format
+        cleaned = cleaned.replaceAll("\\(Variant \\d+ (.*?)\\)", "($1)").trim();
+        // Remove any double spaces
+        cleaned = cleaned.replaceAll("\\s+", " ").trim();
+        // Remove empty parentheses if any
+        cleaned = cleaned.replaceAll("\\(\\)", "").trim();
+        return cleaned;
+    }
+
     private static void insertSkin(Connection connection, String skinName, int weaponId, String imageUrl) throws SQLException {
-        String skinInsertQuery = "INSERT INTO skin (skin_name, weapon_id, icon) VALUES (?, ?, ?)";
-        try (PreparedStatement skinStmt = connection.prepareStatement(skinInsertQuery)) {
-            skinStmt.setString(1, skinName);
-            skinStmt.setInt(2, weaponId);
-            skinStmt.setString(3, imageUrl);
-            skinStmt.executeUpdate();
+        // First check if the skin already exists
+        String checkQuery = "SELECT skin_id, icon FROM skin WHERE skin_name = ? AND weapon_id = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+            checkStmt.setString(1, skinName);
+            checkStmt.setInt(2, weaponId);
+
+            try (var rs = checkStmt.executeQuery()) {
+                if (rs.next()) {
+                    // Skin exists, update the icon if the current one is null and new one isn't
+                    int skinId = rs.getInt("skin_id");
+                    String currentIcon = rs.getString("icon");
+                    if (currentIcon == null && imageUrl != null) {
+                        String updateQuery = "UPDATE skin SET icon = ? WHERE skin_id = ?";
+                        try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
+                            updateStmt.setString(1, imageUrl);
+                            updateStmt.setInt(2, skinId);
+                            updateStmt.executeUpdate();
+                        }
+                    }
+                } else {
+                    // Skin doesn't exist, insert it
+                    String skinInsertQuery = "INSERT INTO skin (skin_name, weapon_id, icon) VALUES (?, ?, ?)";
+                    try (PreparedStatement skinStmt = connection.prepareStatement(skinInsertQuery)) {
+                        skinStmt.setString(1, skinName);
+                        skinStmt.setInt(2, weaponId);
+                        skinStmt.setString(3, imageUrl);
+                        skinStmt.executeUpdate();
+                    }
+                }
+            }
         }
     }
 
