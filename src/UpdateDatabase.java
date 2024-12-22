@@ -13,8 +13,8 @@ import java.util.Map;
 public class UpdateDatabase {
 
     // Database
-    //private static final String DB_URL = "jdbc:mysql://172.26.144.22:3306/skindb";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/skindb";
+    private static final String DB_URL = "jdbc:mysql://172.26.144.22:3306/skindb";
+    //private static final String DB_URL = "jdbc:mysql://localhost:3306/skindb";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "mypassword";
 

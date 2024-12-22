@@ -13,11 +13,11 @@ import java.util.Map;
 public class parseSkin {
 
     public static void main(String[] args) {
-        //String jsonFilePath = "C:\\Users\\yikez\\IdeaProjects\\valorant-skin-ranks\\weapons.json";
-        String jsonFilePath = "/Users/mingkunliu/Downloads/valorant-skin-ranks/skins.json";
+        String jsonFilePath = "C:\\Users\\yikez\\IdeaProjects\\valorant-skin-ranks\\skins.json";
+        //String jsonFilePath = "/Users/mingkunliu/Downloads/valorant-skin-ranks/skins.json";
 
-        //String dbUrl = "jdbc:mysql://172.26.144.22:3306/skindb";
-        String dbUrl = "jdbc:mysql://localhost:3306/skindb";
+        String dbUrl = "jdbc:mysql://172.26.144.22:3306/skindb";
+        //String dbUrl = "jdbc:mysql://localhost:3306/skindb";
         String dbUser = "root";
         String dbPassword = "mypassword";
 
