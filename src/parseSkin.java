@@ -1,6 +1,9 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
@@ -40,7 +43,7 @@ public class parseSkin {
         weaponMappings.put("operator", "operator");
         weaponMappings.put("ares", "ares");
         weaponMappings.put("odin", "odin");
-
+        weaponMappings.put("outlaw", "outlaw");
         try (Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
             // Fetch the weapon ID for melee
             int meleeWeaponId = fetchWeaponId(connection, "melee");
