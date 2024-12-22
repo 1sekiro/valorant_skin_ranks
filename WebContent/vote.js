@@ -1,10 +1,12 @@
 $(document).ready(() => {
+    let selectedWeapon = null; // Store the selected weapon type
+
     // Initially fetch random skins without a weapon filter
     fetchRandomSkins();
 
     // Handle the vote button click to refresh the page with new skins
     $("#vote-button").click(() => {
-        fetchRandomSkins();
+        fetchRandomSkins(selectedWeapon); // Use the selected weapon type
     });
 
     $("#rank-button").click(() => {
@@ -18,15 +20,15 @@ $(document).ready(() => {
 
     // Handle weapon selection from the dropdown
     $("#weapon-select").change(function () {
-        const selectedWeapon = $(this).val(); // Get the selected weapon
+        selectedWeapon = $(this).val(); // Update the selected weapon type
         fetchRandomSkins(selectedWeapon); // Fetch skins for the selected weapon
     });
 
     // Function to fetch skins from the backend
-    function fetchRandomSkins(selectedWeapon = null) {
+    function fetchRandomSkins(weapon = null) {
         let url = "/valorant-skin-ranks/api/vote";
-        if (selectedWeapon) {
-            url += `?weapon=${selectedWeapon}`;
+        if (weapon) {
+            url += `?weapon=${weapon}`;
         }
 
         $.ajax({
@@ -73,7 +75,7 @@ $(document).ready(() => {
             contentType: "application/json",
             data: JSON.stringify({ skinId }),
             success: function () {
-                fetchRandomSkins(); // Refresh skins after voting
+                fetchRandomSkins(selectedWeapon); // Use the selected weapon type after voting
             },
             error: function (error) {
                 console.error("Failed to vote:", error);

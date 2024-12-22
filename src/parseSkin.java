@@ -36,6 +36,7 @@ public class parseSkin {
         weaponMappings.put("phantom", "phantom");
         weaponMappings.put("vandal", "vandal");
         weaponMappings.put("melee", "melee");
+        weaponMappings.put("outlaw", "outlaw");
         weaponMappings.put("marshal", "marshal");
         weaponMappings.put("operator", "operator");
         weaponMappings.put("ares", "ares");

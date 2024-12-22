@@ -1,4 +1,12 @@
 $(document).ready(() => {
+    $("#vote-button").click(() => {
+        window.location.href = "/valorant-skin-ranks/vote.html";
+    });
+
+    $("#rank-button").click(() => {
+        window.location.href = "/valorant-skin-ranks/rank.jsp";
+    });
+
     // Fetch skin data from the servlet
     $.ajax({
         url: "/valorant-skin-ranks/api/rank",
