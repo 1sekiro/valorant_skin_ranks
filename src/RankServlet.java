@@ -34,12 +34,24 @@ public class RankServlet extends HttpServlet {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
 
-        try (Connection conn = dataSource.getConnection()) {
-            // Modified query to include ORDER BY win_num DESC
-            String query = "SELECT skin_name, win_num, icon FROM skin ORDER BY win_num DESC";
-            PreparedStatement statement = conn.prepareStatement(query);
-            ResultSet rs = statement.executeQuery();
+        String weaponName = request.getParameter("weaponName");
 
+        try (Connection conn = dataSource.getConnection()) {
+            String query;
+            PreparedStatement statement;
+
+            if (weaponName == null || weaponName.isEmpty()) {
+
+                weaponName = "vandal";
+            }
+
+            query = "SELECT s.skin_name, s.win_num, s.icon, w.weapon_name, w.icon as weapon_icon " +
+                    "FROM skin s JOIN weapon w ON s.weapon_id = w.weapon_id " +
+                    "WHERE w.weapon_name = ? ORDER BY s.win_num DESC";
+            statement = conn.prepareStatement(query);
+            statement.setString(1, weaponName.toLowerCase());
+
+            ResultSet rs = statement.executeQuery();
             JsonArray jsonArray = new JsonArray();
 
             while (rs.next()) {
@@ -47,6 +59,7 @@ public class RankServlet extends HttpServlet {
                 jsonObject.addProperty("skin_name", rs.getString("skin_name"));
                 jsonObject.addProperty("win_num", rs.getInt("win_num"));
                 jsonObject.addProperty("icon", rs.getString("icon"));
+                jsonObject.addProperty("weapon_name", rs.getString("weapon_name"));
                 jsonArray.add(jsonObject);
             }
 
@@ -60,8 +73,6 @@ public class RankServlet extends HttpServlet {
             jsonObject.addProperty("errorMessage", e.getMessage());
             out.write(jsonObject.toString());
             response.setStatus(500);
-        } finally {
-            out.close();
         }
     }
 }

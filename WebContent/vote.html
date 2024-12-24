@@ -41,19 +41,21 @@
         <option value="Melee">Melee</option>
     </select>
 </div>
+
 <div id="vote-container">
-    <div id="skin1">
-        <img id="skin1-icon" src="" alt="Skin 1" />
-        <p id="skin1-name">Skin 1 Name</p> <!-- Placeholder for skin name -->
-        <button id="vote-skin1">Vote</button>
+    <div class="skin skin-left">
+        <img src="${skin1.icon}" alt="${skin1.skinName}">
+        <p>${skin1.skinName}</p>
+        <button onclick="voteSkin(${skin1.skinId})">VOTE</button>
     </div>
 
-    <div id="skin2">
-        <img id="skin2-icon" src="" alt="Skin 2" />
-        <p id="skin2-name">Skin 2 Name</p> <!-- Placeholder for skin name -->
-        <button id="vote-skin2">Vote</button>
-    </div>
+    <div class="vs-container">VS</div>
 
+    <div class="skin skin-right">
+        <img src="${skin2.icon}" alt="${skin2.skinName}">
+        <p>${skin2.skinName}</p>
+        <button onclick="voteSkin(${skin2.skinId})">VOTE</button>
+    </div>
 </div>
 </body>
 </html>

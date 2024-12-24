@@ -1,6 +1,7 @@
+/* Global styles */
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #1a1a2e, #162447);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(135deg, #0F1923, #1F2326);
     color: #fff;
     margin: 0;
     padding: 0;
@@ -16,134 +17,363 @@ header {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding: 10px 20px;
-    background-color: transparent; /* Matches page background */
-    position: absolute;
+    padding: 20px 40px;
+    background-color: rgba(15, 25, 35, 0.8);
+    position: fixed;
     top: 0;
     right: 0;
+    left: 0;
     z-index: 100;
+    backdrop-filter: blur(10px);
 }
 
 header h1 {
-    font-size: 24px;
+    font-size: 28px;
     margin: 0;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+/* Button styles */
+.nav-btn, .filter-btn, button {
+    padding: 12px 24px;
+    font-size: 16px;
+    color: white;
+    background-color: #ff4655;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
 .nav-btn {
-    margin-left: 15px;
-    padding: 10px 20px;
-    font-size: 16px;
-    color: white;
-    background-color: #007bff; /* Blue background */
-    border: none;
-    border-radius: 50px; /* Makes the button circular */
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    cursor: pointer;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    margin-left: 20px;
+    border-radius: 50px;
+    box-shadow: 0 4px 12px rgba(255, 70, 85, 0.2);
 }
 
-/* Hover effect */
-.nav-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
-    transform: scale(1.1); /* Slightly enlarge the button */
+.nav-btn:hover, .filter-btn:hover, button:hover {
+    background-color: #ff4655;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 70, 85, 0.3);
 }
 
-/* Active button effect */
-.nav-btn:active {
-    transform: scale(1.05); /* Slightly shrink on click */
-    background-color: #003f8a; /* Even darker blue */
+.nav-btn:active, .filter-btn:active, button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 70, 85, 0.2);
 }
+
+/* Main content */
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 80px auto 40px;
+    padding: 20px;
+}
+
 h1 {
-    margin: 20px 0;
+    margin: 40px 0;
     font-size: 2.5rem;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 1px;
 }
 
+/* Table styling */
 table {
-    width: 80%;
-    border-collapse: collapse;
-    margin: 20px auto;
-    background-color: #1f4068;
-    color: #e1e1e6;
-    border-radius: 10px;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+    background-color: rgba(31, 64, 104, 0.6);
+    border-radius: 12px;
     overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
 }
 
 thead th {
-    background-color: #162447;
+    background-color: rgba(22, 36, 71, 0.9);
     color: #fff;
-    padding: 15px;
+    padding: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
 }
 
 tbody tr:nth-child(odd) {
-    background-color: #1b1b2f;
+    background-color: rgba(27, 27, 47, 0.4);
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 70, 85, 0.1);
 }
 
 td, th {
     text-align: center;
-    padding: 10px;
-    border: 1px solid #4e4e50;
+    padding: 16px;
+    border-bottom: 1px solid rgba(78, 78, 80, 0.2);
 }
 
-.skin-icon {
-    width: 80px;
+/* Filter container */
+.filter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 20px 0;
+    padding-right: 5%;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background-color: #1f4068;
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 1000px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+    color: white;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 32px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close:hover {
+    color: #ff4655;
+}
+
+/* Weapon grid */
+#weapon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 24px;
+    padding: 20px;
+}
+
+.weapon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: rgba(22, 36, 71, 0.8);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weapon-item:hover {
+    transform: translateY(-5px);
+    background-color: rgba(255, 70, 85, 0.1);
+    border-color: rgba(255, 70, 85, 0.3);
+}
+
+.weapon-icon {
+    width: 120px;
     height: auto;
-    border-radius: 5px;
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
 }
 
-/* Vote page-specific styling */
+.weapon-name {
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    text-transform: capitalize;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+}
+
+/* Table icons */
+.rank-table-icon {
+    width: 300px;
+    height: auto;
+    object-fit: contain;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.rank-table-icon:hover {
+    transform: scale(1.05);
+}
+
+/* Ensure proper table cell sizing for images */
+#skin_table td:first-child {
+    width: 350px;
+    padding: 20px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .rank-table-icon {
+        width: 200px;
+    }
+
+    #skin_table td:first-child {
+        width: 250px;
+    }
+
+    #weapon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .rank-table-icon {
+        width: 150px;
+    }
+
+    #skin_table td:first-child {
+        width: 180px;
+    }
+
+    .nav-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
 #vote-container {
     display: flex;
     justify-content: center;
-    gap: 30px;
-    margin-top: 30px;
+    align-items: center;
+    gap: 40px;
+    margin: 120px auto;
+    width: 90%;
+    max-width: 1400px;
+    position: relative;
 }
 
 .skin {
-    background-color: #1f4068;
-    border-radius: 10px;
-    padding: 20px;
+    flex: 1;
+    background-color: rgba(31, 64, 104, 0.6);
+    border-radius: 12px;
+    padding: 30px;
     text-align: center;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    max-width: 600px;
+}
+
+.skin:hover {
+    transform: scale(1.02);
 }
 
 .skin img {
-    width: 500%;
-    max-width: 250px;
+    width: 100%;
+    max-width: 500px;
     height: auto;
-    margin-bottom: 15px;
-    border-radius: 10px;
+    margin-bottom: 20px;
+    border-radius: 12px;
 }
 
 .skin p {
-    font-size: 18px;
-    margin: 10px 0;
+    font-size: 20px;
+    margin: 15px 0;
+    font-weight: 500;
+    letter-spacing: 0.5px;
 }
 
-button {
-    padding: 10px 20px;
-    font-size: 16px;
+/* VS Element */
+.vs-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: #ff4655;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
     color: white;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 70, 85, 0.4);
+    z-index: 10;
 }
 
-button:hover {
-    background-color: #0056b3;
+/* Add these animation classes */
+.skin-left {
+    animation: slideInLeft 0.5s ease-out;
 }
 
-/* Filter dropdown styling */
-#filter-container {
-    margin: 20px 0;
+.skin-right {
+    animation: slideInRight 0.5s ease-out;
 }
 
-#weapon-select {
-    padding: 10px;
-    font-size: 16px;
-    background-color: #222831;
-    color: white;
-    border: 1px solid #4e4e50;
-    border-radius: 5px;
+/* Animations */
+@keyframes slideInLeft {
+    from {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    #vote-container {
+        flex-direction: column;
+        gap: 60px;
+    }
+
+    .vs-container {
+        top: calc(50% - 30px);
+        width: 60px;
+        height: 60px;
+        font-size: 20px;
+    }
+
+    .skin {
+        width: 100%;
+    }
 }
