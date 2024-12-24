@@ -49,10 +49,11 @@ CREATE TABLE skin (
 );
 
 -- Create Rank Table
-CREATE TABLE `rank` (
-                        rank_id INT AUTO_INCREMENT PRIMARY KEY,
-                        skin_id INT NOT NULL,
-                        vote_count INT NOT NULL DEFAULT 0,
-                        rank_position INT,
-                        FOREIGN KEY (skin_id) REFERENCES skin(skin_id)
-);
+CREATE VIEW rank_table AS
+SELECT
+    skin_id,
+    win_num
+FROM
+    skin
+ORDER BY
+    win_num DESC;

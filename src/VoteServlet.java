@@ -101,7 +101,10 @@ public class VoteServlet extends HttpServlet {
     }
 
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        response.setContentType("application/json");
+
         JsonObject jsonRequest = JsonParser.parseReader(request.getReader()).getAsJsonObject();
         int skinId = jsonRequest.get("skinId").getAsInt();
 
@@ -109,12 +112,33 @@ public class VoteServlet extends HttpServlet {
             String updateVoteQuery = "UPDATE skin SET win_num = win_num + 1 WHERE skin_id = ?";
             PreparedStatement stmt = connection.prepareStatement(updateVoteQuery);
             stmt.setInt(1, skinId);
-            stmt.executeUpdate();
 
-            response.setStatus(200);
+            int rowsUpdated = stmt.executeUpdate(); // Track rows updated
+
+            // Confirm update success
+            if (rowsUpdated > 0) {
+                response.setStatus(200);
+                try (PrintWriter out = response.getWriter()) {
+                    JsonObject successResponse = new JsonObject();
+                    successResponse.addProperty("message", "Vote recorded successfully.");
+                    out.write(successResponse.toString());
+                }
+            } else {
+                response.setStatus(404); // Skin ID not found
+                try (PrintWriter out = response.getWriter()) {
+                    JsonObject errorResponse = new JsonObject();
+                    errorResponse.addProperty("error", "Skin ID not found. Vote not recorded.");
+                    out.write(errorResponse.toString());
+                }
+            }
         } catch (SQLException e) {
             response.setStatus(500);
-            response.getWriter().write("{\"error\": \"" + e.getMessage() + "\"}");
+            try (PrintWriter out = response.getWriter()) {
+                JsonObject errorResponse = new JsonObject();
+                errorResponse.addProperty("error", "Database error: " + e.getMessage());
+                out.write(errorResponse.toString());
+            }
         }
     }
+
 }
