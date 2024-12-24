@@ -66,15 +66,27 @@ public class VoteServlet extends HttpServlet {
                 ResultSet skinRs = skinStmt.executeQuery();
 
                 JsonArray skins = new JsonArray();
-                while (skinRs.next()) {
+                int[] selectedSkinIds = new int[2];
+                int count = 0;
+
+                while (skinRs.next() && count < 2) {
                     JsonObject skin = new JsonObject();
-                    skin.addProperty("id", skinRs.getInt("skin_id"));
+                    int skinId = skinRs.getInt("skin_id");
+                    skin.addProperty("id", skinId);
                     skin.addProperty("name", skinRs.getString("skin_name"));
                     skin.addProperty("icon", skinRs.getString("icon"));
                     skins.add(skin);
+                    selectedSkinIds[count++] = skinId;
                 }
 
                 if (skins.size() == 2) {
+                    // Update vote_count for the selected skins
+                    String updateVoteCountQuery = "UPDATE skin SET vote_count = vote_count + 1 WHERE skin_id IN (?, ?)";
+                    PreparedStatement updateStmt = connection.prepareStatement(updateVoteCountQuery);
+                    updateStmt.setInt(1, selectedSkinIds[0]);
+                    updateStmt.setInt(2, selectedSkinIds[1]);
+                    updateStmt.executeUpdate();
+
                     try (PrintWriter out = response.getWriter()) {
                         JsonObject jsonResponse = new JsonObject();
                         jsonResponse.add("skin1", skins.get(0));

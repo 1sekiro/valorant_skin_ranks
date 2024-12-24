@@ -41,7 +41,6 @@ public class RankServlet extends HttpServlet {
             PreparedStatement statement;
 
             if (weaponName == null || weaponName.isEmpty()) {
-
                 weaponName = "vandal";
             }
 
