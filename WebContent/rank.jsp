@@ -33,6 +33,7 @@
     <table id="skin_table" class="table table-striped table-bordered">
         <thead class="thead-dark">
         <tr>
+            <th>Rank</th>
             <th>Icon</th>
             <th>Skin Name</th>
             <th>Wins</th>
