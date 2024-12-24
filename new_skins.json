@@ -1,0 +1,178 @@
+[
+    {
+        "name": "Rune Stone Odin",
+        "weapon": "Odin",
+        "image_url": "https://valorantstrike.com/wp-content/uploads/Valorant-Rune-Stone-Collection-Odin-HD.jpg"
+    },
+    {
+        "name": "Lycan's Bane Odin",
+        "weapon": "Odin",
+        "image_url": "https://valorantstrike.com/wp-content/uploads/Valorant-Lycan_s-Bane-Collection-Odin-HD.jpg"
+    },
+    {
+        "name": "Endeavour Ares",
+        "weapon": "Ares",
+        "image_url": "https://valorantstrike.com/wp-content/uploads/Valorant-Endeavour-Collection-Ares-HD.jpg"
+    },
+    {
+        "name": "Goldwing Ares",
+        "weapon": "Ares",
+        "image_url": "https://www.dexerto.com/cdn-image/wp-content/uploads/2021/10/29/Judge_Goldwing_SideView.jpg?width=1200&quality=75&format=auto"
+    },
+    {
+        "name": "Nunca Olvidados Ares (Living)",
+        "weapon": "Ares",
+        "image_url": "https://valorantstrike.com/valorant-skins/valorant-nunca-olvidados-collection/valorant-nunnca-olvidados-ares/"
+    },
+    {
+        "name": "Nunca Olvidados Ares (Eternal)",
+        "weapon": "Ares",
+        "image_url": "https://valorantinfo.com/images/us/nunca-olvidados-ares_valorant_full_skin_154278.webp"
+    },
+    {
+        "name": "Celestial Ares",
+        "weapon": "Ares",
+        "image_url": "https://valorantinfo.gg/wp-content/uploads/2021/10/valorant-celestial-ares-skin.png"
+    },
+
+    {
+        "name": "Altitude Vandal",
+        "weapon": "Vandal",
+        "image_url": "https://valorantinfo.com/images/us/altitude-vandal_valorant_full_skin_722237.webp"
+    },
+    {
+        "name": "Neptune Anchor",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/neptune-anchor_valorant_full_skin_335831.webp"
+    },
+    {
+        "name": "Composite Knife",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/composite-knife_valorant_full_skin_844168.webp"
+    },
+    {
+        "name": "Champions 2021 Karambit",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/champions-2021-karambit_valorant_full_skin_154996.webp"
+    },
+    {
+        "name": "Black.Market Butterfly Knife",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/blackmarket-butterfly-knife_valorant_full_skin_746900.webp"
+    },
+    {
+        "name": "Bound",
+        "weapon": "Melee",
+        "image_url": "https://pbs.twimg.com/media/FufRJv0XsAA67LI?format=jpg&name=4096x4096"
+    },
+    {
+        "name": "Prism Knife",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/prism-knife_valorant_full_skin_155015.webp"
+    },
+    {
+        "name": "Iridian Thorn Blade",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/iridian-thorn-blade_valorant_full_skin_524514.webp"
+    },
+    {
+        "name": "Genesis Arc",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/genesis-arc_valorant_full_skin_155041.webp"
+    },
+    {
+        "name": "Luna's Descent",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/lunas-descent_valorant_full_skin_632426.webp"
+    },
+    {
+        "name": "NO LIMITS Bat",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/no-limits-bat_valorant_full_skin_819592.webp"
+    },
+    {
+        "name": "Altitude Knuckle Knife",
+        "weapon": "Melee",
+        "image_url": "https://valorantinfo.com/images/us/altitude-knuckle-knife_valorant_full_skin_723292.webp"
+    },
+    {
+        "name": "Black.Market Classic",
+        "weapon": "Classic",
+        "image_url": "https://valorantinfo.com/images/us/blackmarket-classic_valorant_full_skin_746271.webp"
+    },
+    {
+        "name": "Bound Classic",
+        "weapon": "Classic",
+        "image_url": "https://valorantinfo.com/images/us/bound-classic_valorant_full_skin_769924.webp"
+    },
+    {
+        "name": "Goldwing Classic",
+        "weapon": "Classic",
+        "image_url": "https://valorantinfo.com/images/us/goldwing-classic_valorant_full_skin_154614.webp"
+    },
+    {
+        "name": "Avalanche Classic",
+        "weapon": "Classic",
+        "image_url": "https://valorantinfo.com/images/us/avalanche-classic_valorant_full_skin_154619.webp"
+    },
+    {
+        "name": "Sentinels of Light Shorty Level 4 (Red/Green)",
+        "weapon": "Shorty",
+        "image_url": "https://valorantinfo.com/weapons/shorty/sentinels-of-light"
+    },
+    {
+        "name": "Hue Shift Shorty",
+        "weapon": "Shorty",
+        "image_url": "https://valorantinfo.com/images/us/hue-shift-shorty_valorant_full_skin_265783.webp"
+    },
+    {
+        "name": "Genesis Shorty",
+        "weapon": "Shorty",
+        "image_url": "https://valorantinfo.com/images/us/genesis-shorty_valorant_full_skin_154745.webp"
+    },
+    {
+        "name": "Rune Stone Shorty",
+        "weapon": "Shorty",
+        "image_url": "https://valorantinfo.com/images/us/rune-stone-shorty_valorant_full_skin_524084.webp"
+    },
+    {
+        "name": "Nunca Olvidados Frenzy",
+        "weapon": "Frenzy",
+        "image_url": "https://valorantinfo.com/images/us/nunca-olvidados-frenzy_valorant_full_skin_154573.webp"
+    },
+    {
+        "name": "RGX 11z Pro Frenzy Level 5 (Red)",
+        "weapon": "Frenzy",
+        "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-frenzy-level-5variant-1-red_valorant_full_skin_154547.webp"
+    },
+    {
+        "name": "RGX 11z Pro Frenzy Level 5 (Blue)",
+        "weapon": "Frenzy",
+        "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-frenzy-level-5variant-2-blue_valorant_full_skin_154548.webp"
+    },
+    {
+        "name": "RGX 11z Pro Frenzy Level 5 (Yellow)",
+        "weapon": "Frenzy",
+        "image_url": "https://valorantinfo.com/images/us/rgx-11z-pro-frenzy-level-5variant-3-yellow_valorant_full_skin_154549.webp"
+    },
+    {
+        "name": "RagnaRocker Frenzy",
+        "weapon": "Frenzy",
+        "image_url": "https://valorantinfo.com/images/us/ragnarocker-frenzy_valorant_full_skin_154550.webp"
+    },
+    {
+        "name": ".SYS Sheriff",
+        "weapon": "Sheriff",
+        "image_url": "https://valorantinfo.com/images/us/sys-sheriff_valorant_full_skin_265725.webp"
+    },
+    {
+        "name": "Iridian Thorn Sheriff",
+        "weapon": "Sheriff",
+        "image_url": "https://valorantinfo.com/images/us/iridian-thorn-sheriff_valorant_full_skin_524043.webp"
+    },
+    {
+        "name": "Crimsonbeast Sheriff",
+        "weapon": "Sheriff",
+        "image_url": "https://valorantinfo.com/images/us/crimsonbeast-sheriff_valorant_full_skin_503484.webp"
+    }
+]

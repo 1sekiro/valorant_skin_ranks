@@ -13,11 +13,11 @@ import java.util.Map;
 public class parseSkin {
 
     public static void main(String[] args) {
-        //String jsonFilePath = "C:\\Users\\yikez\\IdeaProjects\\valorant-skin-ranks\\weapons.json";
-        String jsonFilePath = "/Users/mingkunliu/Downloads/valorant-skin-ranks/skins.json";
+        String jsonFilePath = "C:\\Users\\yikez\\IdeaProjects\\valorant-skin-ranks\\skins.json";
+        //String jsonFilePath = "/Users/mingkunliu/Downloads/valorant-skin-ranks/skins.json";
 
-        //String dbUrl = "jdbc:mysql://172.26.144.22:3306/skindb";
-        String dbUrl = "jdbc:mysql://localhost:3306/skindb";
+        String dbUrl = "jdbc:mysql://172.26.144.22:3306/skindb";
+        //String dbUrl = "jdbc:mysql://localhost:3306/skindb";
         String dbUser = "root";
         String dbPassword = "mypassword";
 
@@ -41,6 +41,7 @@ public class parseSkin {
         weaponMappings.put("operator", "operator");
         weaponMappings.put("ares", "ares");
         weaponMappings.put("odin", "odin");
+        weaponMappings.put("outlaw", "outlaw");
 
         try (Connection connection = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
             // Fetch the weapon ID for melee
@@ -71,6 +72,11 @@ public class parseSkin {
                         JSONObject chromaNode = chromasArray.getJSONObject(j);
                         String chromaName = chromaNode.getString("displayName");
                         String chromaIcon = chromaNode.optString("displayIcon", null);
+
+                        // Skip if the icon is null
+                        if (chromaIcon == null) {
+                            continue;
+                        }
 
                         // Clean up chroma name to remove "(Variant X Color)"
                         String cleanedChromaName = cleanChromaName(chromaName);
@@ -106,10 +112,14 @@ public class parseSkin {
     }
 
     private static String cleanChromaName(String chromaName) {
-        if (chromaName.contains("(Variant")) {
-            return chromaName.replaceAll("\\(Variant \\d+ (.*?)\\)", "($1)").trim();
-        }
-        return chromaName.trim();
+        String cleaned = chromaName.replaceAll("Level \\d+", "").trim();
+        // Handle Variant n Color format
+        cleaned = cleaned.replaceAll("\\(Variant \\d+ (.*?)\\)", "($1)").trim();
+        // Remove any double spaces
+        cleaned = cleaned.replaceAll("\\s+", " ").trim();
+        // Remove empty parentheses if any
+        cleaned = cleaned.replaceAll("\\(\\)", "").trim();
+        return cleaned;
     }
 
     private static int fetchWeaponId(Connection connection, String weaponName) throws SQLException {
@@ -125,6 +135,7 @@ public class parseSkin {
             }
         }
     }
+
     private static void deleteStandardSkins(Connection connection) throws SQLException {
         String deleteQuery = "DELETE FROM skin WHERE LOWER(skin_name) LIKE ?";
         try (PreparedStatement stmt = connection.prepareStatement(deleteQuery)) {
