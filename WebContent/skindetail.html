@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skin Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .skin-icon {
+      display: block;
+      margin: 0 auto 20px;
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 16px;
+      margin: 10px 0;
+    }
+
+    .error {
+      color: red;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+<div class="container" id="skin-details">
+  <h1>Loading...</h1>
+</div>
+
+<script>
+  async function fetchSkinDetails() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const skinId = urlParams.get('skinId');
+
+    if (!skinId) {
+      document.getElementById('skin-details').innerHTML = '<p class="error">No skin ID provided.</p>';
+      return;
+    }
+
+    try {
+      const response = await fetch(`/api/skin?skinId=${skinId}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch skin details.');
+      }
+      const skin = await response.json();
+
+      if (skin.error) {
+        document.getElementById('skin-details').innerHTML = `<p class="error">${skin.error}</p>`;
+        return;
+      }
+
+      document.getElementById('skin-details').innerHTML = `
+                    <img class="skin-icon" src="${skin.icon}" alt="${skin.skin_name}">
+                    <h1>${skin.skin_name}</h1>
+                    <p><strong>Wins:</strong> ${skin.win_num}</p>
+                    <p><strong>Losses:</strong> ${skin.loss_num}</p>
+                    <p><strong>Win Rate:</strong> ${skin.win_rate}%</p>
+                `;
+    } catch (error) {
+      document.getElementById('skin-details').innerHTML = `<p class="error">${error.message}</p>`;
+    }
+  }
+
+  fetchSkinDetails();
+</script>
+</body>
+</html>
