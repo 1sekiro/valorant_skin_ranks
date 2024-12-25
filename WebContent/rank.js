@@ -30,7 +30,7 @@ $(document).ready(() => {
         });
     }
 
-    function loadSkins(weaponName = "vandal") { // Changed default parameter to "vandal"
+    function loadSkins(weaponName = "vandal") {
         let url = "/valorant-skin-ranks/api/rank";
         if (weaponName) {
             url += `?weaponName=${weaponName}`;
@@ -45,14 +45,22 @@ $(document).ready(() => {
 
                 data.forEach((skin, index) => {
                     const row = `
-                        <tr>
-                            <td>${index + 1}</td> <!-- Rank column -->
-                            <td><img src="${skin.icon}" alt="${skin.skin_name}" class="rank-table-icon"></td>
-                            <td>${skin.skin_name}</td>
-                            <td>${skin.win_num}</td>
-                        </tr>
-                    `;
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td class="skin-cell">
+                            <img src="${skin.icon}" alt="${skin.skin_name}" class="rank-table-icon">
+                        </td>
+                        <td class="skin-name">${skin.skin_name}</td>
+                        <td>${skin.win_num}</td>
+                    </tr>
+                `;
                     tableBody.append(row);
+                });
+
+                // Add click handlers after creating the rows
+                $(".skin-cell").click(function() {
+                    const skinName = $(this).closest('tr').find('.skin-name').text();
+                    window.location.href = `/valorant-skin-ranks/skindetail.html?skinName=${encodeURIComponent(skinName)}`;
                 });
             },
             error: function(error) {

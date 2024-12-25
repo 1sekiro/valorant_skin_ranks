@@ -40,7 +40,6 @@
         </tr>
         </thead>
         <tbody id="skin_table_body">
-        <!-- Table rows will be populated here by JavaScript -->
         </tbody>
     </table>
 </div>

@@ -216,7 +216,27 @@ td, th {
     letter-spacing: 0.5px;
 }
 
-/* Table icons */
+#skin_table td {
+    vertical-align: middle;
+}
+
+#skin_table td:first-child {  /* Rank column */
+    width: 8%;
+}
+
+#skin_table td:nth-child(2) {  /* Icon column */
+    width: 45%;
+}
+
+#skin_table td:nth-child(3) {  /* Skin name column */
+    width: 32%;
+}
+
+#skin_table td:nth-child(4) {  /* Wins column */
+    width: 15%;
+}
+
+
 .rank-table-icon {
     width: 300px;
     height: auto;
@@ -225,24 +245,19 @@ td, th {
     transition: transform 0.3s ease;
 }
 
-.rank-table-icon:hover {
-    transform: scale(1.05);
+@media (max-width: 1200px) {
+    .rank-table-icon {
+        width: 220px;
+    }
 }
 
-/* Ensure proper table cell sizing for images */
-#skin_table td:first-child {
-    width: 350px;
-    padding: 20px;
-}
-
-/* Media Queries for Responsiveness */
 @media (max-width: 768px) {
     .rank-table-icon {
-        width: 200px;
+        width: 180px;
     }
 
-    #skin_table td:first-child {
-        width: 250px;
+    #skin_table td:nth-child(2) {  /* Icon column */
+        width: 40%;
     }
 
     #weapon-grid {
@@ -255,8 +270,8 @@ td, th {
         width: 150px;
     }
 
-    #skin_table td:first-child {
-        width: 180px;
+    #skin_table td:nth-child(2) {  /* Icon column */
+        width: 35%;
     }
 
     .nav-btn {
