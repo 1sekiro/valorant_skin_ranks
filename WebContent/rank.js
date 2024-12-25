@@ -43,9 +43,10 @@ $(document).ready(() => {
                 const tableBody = $("#skin_table_body");
                 tableBody.empty();
 
-                data.forEach((skin) => {
+                data.forEach((skin, index) => {
                     const row = `
                         <tr>
+                            <td>${index + 1}</td> <!-- Rank column -->
                             <td><img src="${skin.icon}" alt="${skin.skin_name}" class="rank-table-icon"></td>
                             <td>${skin.skin_name}</td>
                             <td>${skin.win_num}</td>
