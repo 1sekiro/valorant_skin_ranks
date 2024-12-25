@@ -33,21 +33,21 @@ public class SkinDetailsServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
 
-        String skinId = request.getParameter("skinId"); // Get skinId from query parameter
+        String skinName = request.getParameter("skinName"); // Get skinName from query parameter
 
-        if (skinId == null || skinId.isEmpty()) {
+        if (skinName == null || skinName.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"error\": \"Missing skinId parameter.\"}");
+            response.getWriter().write("{\"error\": \"Missing skinName parameter.\"}");
             return;
         }
 
         try (Connection connection = dataSource.getConnection()) {
             String query = "SELECT skin_name, win_num, loss_num, " +
                     "(CASE WHEN (win_num + loss_num) > 0 THEN ROUND(win_num * 100.0 / (win_num + loss_num), 2) ELSE 0 END) AS win_rate, icon " +
-                    "FROM skin WHERE skin_id = ?";
+                    "FROM skin WHERE skin_name = ?";
 
             PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, skinId);
+            stmt.setString(1, skinName);
 
             ResultSet rs = stmt.executeQuery();
 
@@ -75,3 +75,4 @@ public class SkinDetailsServlet extends HttpServlet {
         }
     }
 }
+

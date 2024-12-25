@@ -1,42 +1,30 @@
 // JavaScript for Skin Details Page
 
-// Function to fetch skin details based on the provided skin ID
+// Function to fetch skin details based on the provided skin name
 async function fetchSkinDetails() {
     const urlParams = new URLSearchParams(window.location.search);
-    const skinId = urlParams.get('skinId');
+    const skinName = urlParams.get('skinName');
 
-    const detailsContainer = document.getElementById('skin-details');
-
-    if (!skinId) {
-        detailsContainer.innerHTML = '<p class="error">No skin ID provided.</p>';
+    if (!skinName) {
+        console.error("Missing skinName parameter.");
         return;
     }
 
     try {
-        const response = await fetch(`/api/skin?skinId=${skinId}`);
+        const response = await fetch(`/api/skin?skinName=${encodeURIComponent(skinName)}`);
 
         if (!response.ok) {
-            throw new Error('Failed to fetch skin details.');
+            throw new Error("Failed to fetch skin details.");
         }
 
         const skin = await response.json();
-
-        if (skin.error) {
-            detailsContainer.innerHTML = `<p class="error">${skin.error}</p>`;
-            return;
-        }
-
-        detailsContainer.innerHTML = `
-            <img class="skin-icon" src="${skin.icon}" alt="${skin.skin_name}">
-            <h1>${skin.skin_name}</h1>
-            <p><strong>Wins:</strong> ${skin.win_num}</p>
-            <p><strong>Losses:</strong> ${skin.loss_num}</p>
-            <p><strong>Win Rate:</strong> ${skin.win_rate}%</p>
-        `;
+        console.log(skin);
+        // Render skin details...
     } catch (error) {
-        detailsContainer.innerHTML = `<p class="error">${error.message}</p>`;
+        console.error(error);
     }
 }
+
 
 // Initialize the page by fetching the skin details
 document.addEventListener('DOMContentLoaded', fetchSkinDetails);
