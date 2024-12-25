@@ -15,46 +15,43 @@
         <button id="rank-button" class="nav-btn">Ranks</button>
     </div>
 </header>
-<h1>Vote for Your Favorite Skin</h1>
-<div id="filter-container">
-    <button id="filter-button">Filter by Weapon</button>
-    <select id="weapon-select" style="display: none;">
-        <option value="" selected>All Weapons (Random)</option>
-        <option value="Classic">Classic</option>
-        <option value="Shorty">Shorty</option>
-        <option value="Frenzy">Frenzy</option>
-        <option value="Ghost">Ghost</option>
-        <option value="Sheriff">Sheriff</option>
-        <option value="Stinger">Stinger</option>
-        <option value="Spectre">Spectre</option>
-        <option value="Bucky">Bucky</option>
-        <option value="Judge">Judge</option>
-        <option value="Bulldog">Bulldog</option>
-        <option value="Guardian">Guardian</option>
-        <option value="Phantom">Phantom</option>
-        <option value="Vandal">Vandal</option>
-        <option value="Marshal">Marshal</option>
-        <option value="Outlaw">Outlaw</option>
-        <option value="Operator">Operator</option>
-        <option value="Ares">Ares</option>
-        <option value="Odin">Odin</option>
-        <option value="Melee">Melee</option>
-    </select>
-</div>
 
-<div id="vote-container">
-    <div class="skin skin-left">
-        <img id="skin1-icon" src="" alt="Skin 1 Icon">
-        <p id="skin1-name"></p>
-        <button id="vote-skin1">VOTE</button>
+<div class="container mt-5">
+    <h1>Vote for Your Favorite Skin</h1>
+
+    <!-- Filter button container -->
+    <div class="filter-container">
+        <button id="filter-button" class="filter-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="filter-icon">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            Filter
+        </button>
     </div>
 
-    <div class="vs-container">VS</div>
+    <!-- Weapon filter modal -->
+    <div id="weapon-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Select Weapon</h2>
+            <div id="weapon-grid"></div>
+        </div>
+    </div>
 
-    <div class="skin skin-right">
-        <img id="skin2-icon" src="" alt="Skin 2 Icon">
-        <p id="skin2-name"></p>
-        <button id="vote-skin2">VOTE</button>
+    <div id="vote-container">
+        <div class="skin skin-left">
+            <img id="skin1-icon" src="" alt="Skin 1 Icon">
+            <p id="skin1-name"></p>
+            <button id="vote-skin1">VOTE</button>
+        </div>
+
+        <div class="vs-container">VS</div>
+
+        <div class="skin skin-right">
+            <img id="skin2-icon" src="" alt="Skin 2 Icon">
+            <p id="skin2-name"></p>
+            <button id="vote-skin2">VOTE</button>
+        </div>
     </div>
 </div>
 </body>

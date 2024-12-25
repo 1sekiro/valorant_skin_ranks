@@ -1,7 +1,12 @@
 /* Global styles */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(135deg, #0F1923, #1F2326);
+    background: linear-gradient(rgba(15, 25, 35, 0.9), rgba(31, 35, 38, 0.9)), /* Dark overlay */
+    url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2020/05/v1.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    background-repeat: no-repeat;
     color: #fff;
     margin: 0;
     padding: 0;
