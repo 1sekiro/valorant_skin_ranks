@@ -1,5 +1,4 @@
 import com.google.gson.JsonObject;
-
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,48 +30,62 @@ public class SkinDetailsServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("application/json");
+        // Add CORS headers
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Methods", "GET");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-        String skinName = request.getParameter("skinName"); // Get skinName from query parameter
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+
+        String skinName = request.getParameter("skinName");
+
+        System.out.println("Received request for skin: " + skinName);
 
         if (skinName == null || skinName.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            response.getWriter().write("{\"error\": \"Missing skinName parameter.\"}");
+            sendError(response, HttpServletResponse.SC_BAD_REQUEST, "Missing skinName parameter.");
             return;
         }
 
         try (Connection connection = dataSource.getConnection()) {
-            String query = "SELECT skin_name, win_num, loss_num, " +
-                    "(CASE WHEN (win_num + loss_num) > 0 THEN ROUND(win_num * 100.0 / (win_num + loss_num), 2) ELSE 0 END) AS win_rate, icon " +
+            String query = "SELECT skin_name, win_num, vote_count, " +
+                    "(CASE WHEN vote_count > 0 THEN ROUND(win_num * 100.0 / vote_count, 2) ELSE 0 END) AS win_rate, icon " +
                     "FROM skin WHERE skin_name = ?";
 
-            PreparedStatement stmt = connection.prepareStatement(query);
-            stmt.setString(1, skinName);
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.setString(1, skinName);
+                System.out.println("Executing query: " + query + " with parameter: " + skinName);
 
-            ResultSet rs = stmt.executeQuery();
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        JsonObject skinDetails = new JsonObject();
+                        skinDetails.addProperty("skin_name", rs.getString("skin_name"));
+                        skinDetails.addProperty("win_num", rs.getInt("win_num"));
+                        skinDetails.addProperty("vote_count", rs.getInt("vote_count"));
+                        skinDetails.addProperty("win_rate", rs.getDouble("win_rate"));
+                        skinDetails.addProperty("icon", rs.getString("icon"));
 
-            if (rs.next()) {
-                JsonObject skinDetails = new JsonObject();
-                skinDetails.addProperty("skin_name", rs.getString("skin_name"));
-                skinDetails.addProperty("win_num", rs.getInt("win_num"));
-                skinDetails.addProperty("loss_num", rs.getInt("loss_num"));
-                skinDetails.addProperty("win_rate", rs.getDouble("win_rate"));
-                skinDetails.addProperty("icon", rs.getString("icon"));
+                        String jsonResponse = skinDetails.toString();
+                        System.out.println("Sending response: " + jsonResponse);
 
-                try (PrintWriter out = response.getWriter()) {
-                    out.write(skinDetails.toString());
+                        try (PrintWriter out = response.getWriter()) {
+                            out.write(jsonResponse);
+                        }
+                    } else {
+                        sendError(response, HttpServletResponse.SC_NOT_FOUND, "Skin not found: " + skinName);
+                    }
                 }
-            } else {
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                response.getWriter().write("{\"error\": \"Skin not found.\"}");
             }
-
-            rs.close();
-            stmt.close();
         } catch (SQLException e) {
-            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            response.getWriter().write("{\"error\": \"Database error: " + e.getMessage() + "\"}");
+            System.err.println("Database error: " + e.getMessage());
+            sendError(response, HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Database error: " + e.getMessage());
         }
     }
-}
 
+    private void sendError(HttpServletResponse response, int status, String message) throws IOException {
+        response.setStatus(status);
+        JsonObject error = new JsonObject();
+        error.addProperty("error", message);
+        response.getWriter().write(error.toString());
+    }
+}
