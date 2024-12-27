@@ -18,14 +18,13 @@
 
     <!-- Add filter button container -->
     <div class="filter-container">
-        <button id="filter-button" class="filter-btn">Filter by Weapon</button>
+        <button id="filter-button" class="filter-btn">Filter</button>
     </div>
 
     <!-- Add weapon filter modal -->
     <div id="weapon-modal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <h2>Select Weapon</h2>
             <div id="weapon-grid"></div>
         </div>
     </div>
