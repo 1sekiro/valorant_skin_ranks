@@ -40,7 +40,7 @@ header h1 {
 }
 
 /* Button styles */
-.nav-btn, .filter-btn, button {
+.filter-btn, button {
     padding: 12px 24px;
     font-size: 16px;
     color: white;
@@ -54,19 +54,37 @@ header h1 {
     letter-spacing: 0.5px;
 }
 
+/* Nav button styles */
 .nav-btn {
     margin-left: 20px;
-    border-radius: 50px;
-    box-shadow: 0 4px 12px rgba(255, 70, 85, 0.2);
+    background-color: transparent;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+    font-size: 16px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
 }
 
-.nav-btn:hover, .filter-btn:hover, button:hover {
+.nav-btn:hover {
+    background-color: transparent;
+    transform: scale(1.1);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Filter button effects */
+.filter-btn:hover,
+button:not(.nav-btn):hover {
     background-color: #ff4655;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(255, 70, 85, 0.3);
 }
 
-.nav-btn:active, .filter-btn:active, button:active {
+.filter-btn:active,
+button:not(.nav-btn):active {
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(255, 70, 85, 0.2);
 }
@@ -134,7 +152,6 @@ td, th {
     padding-right: 5%;
 }
 
-/* Modal styles */
 .modal {
     display: none;
     position: fixed;
@@ -143,27 +160,28 @@ td, th {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(5px);
+    pointer-events: none;
 }
 
 .modal-content {
-    background-color: #1f4068;
-    margin: 5% auto;
-    padding: 30px;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 1000px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
 }
 
-.modal-content h2 {
-    color: white;
-    margin-bottom: 20px;
-    text-align: center;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
+/* Modal styles */
+.modal-content {
+    background-color: rgba(31, 64, 104, 0.7);
+    backdrop-filter: blur(8px);
+    margin: 0;
+    padding: 12px;
+    border-radius: 8px;
+    width: 400px;
+    max-height: 500px;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 80px;
+    right: 40px;
+    z-index: 1001;
 }
 
 .close {
@@ -182,21 +200,22 @@ td, th {
 /* Weapon grid */
 #weapon-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 24px;
-    padding: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 10px;
+    overflow-y: auto;
 }
 
 .weapon-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    background-color: rgba(22, 36, 71, 0.8);
-    border-radius: 12px;
+    padding: 12px;
+    background-color: rgba(22, 36, 71, 0.6);
+    border-radius: 8px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .weapon-item:hover {
@@ -206,10 +225,11 @@ td, th {
 }
 
 .weapon-icon {
-    width: 120px;
-    height: auto;
-    margin-bottom: 15px;
-    transition: transform 0.3s ease;
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
+    margin-bottom: 8px;
+    transition: transform 0.2s ease;
 }
 
 .weapon-name {

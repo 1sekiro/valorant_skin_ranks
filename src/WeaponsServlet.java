@@ -32,7 +32,11 @@ public class WeaponsServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try (Connection conn = dataSource.getConnection()) {
-            String query = "SELECT weapon_id, weapon_name, icon FROM weapon ORDER BY weapon_name";
+            String query = "SELECT w.weapon_id, w.weapon_name, w.icon, COUNT(s.skin_id) as skin_count " +
+                    "FROM weapon w " +
+                    "LEFT JOIN skin s ON w.weapon_id = s.weapon_id " +
+                    "GROUP BY w.weapon_id, w.weapon_name, w.icon " +
+                    "ORDER BY skin_count DESC";
             PreparedStatement statement = conn.prepareStatement(query);
             ResultSet rs = statement.executeQuery();
 
