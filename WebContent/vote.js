@@ -72,11 +72,11 @@ $(document).ready(() => {
                 if (data.skin1 && data.skin2) {
                     $("#skin1-icon").attr("src", data.skin1.icon);
                     $("#skin1-name").text(data.skin1.name);
-                    $("#vote-skin1").data("skin-id", data.skin1.id);
+                    $("#vote-skin1").attr("data-skin-id", data.skin1.id);
 
                     $("#skin2-icon").attr("src", data.skin2.icon);
                     $("#skin2-name").text(data.skin2.name);
-                    $("#vote-skin2").data("skin-id", data.skin2.id);
+                    $("#vote-skin2").attr("data-skin-id", data.skin2.id);
                 }
             },
             error: function (error) {
@@ -86,21 +86,26 @@ $(document).ready(() => {
     }
 
     $("#vote-skin1").click(function () {
-        const skinId = $(this).data("skin-id");
-        voteForSkin(skinId);
+        const winningSkinId = $(this).attr("data-skin-id");
+        const losingSkinId = $("#vote-skin2").attr("data-skin-id");
+        voteForSkin(winningSkinId, losingSkinId);
     });
 
     $("#vote-skin2").click(function () {
-        const skinId = $(this).data("skin-id");
-        voteForSkin(skinId);
+        const winningSkinId = $(this).attr("data-skin-id");
+        const losingSkinId = $("#vote-skin1").attr("data-skin-id");
+        voteForSkin(winningSkinId, losingSkinId);
     });
 
-    function voteForSkin(skinId) {
+    function voteForSkin(winningSkinId, losingSkinId) {
         $.ajax({
             url: "/valorant-skin-ranks/api/vote",
             method: "POST",
             contentType: "application/json",
-            data: JSON.stringify({ skinId }),
+            data: JSON.stringify({
+                skinId: winningSkinId,
+                otherSkinId: losingSkinId
+            }),
             success: function () {
                 fetchRandomSkins(selectedWeapon);
             },
