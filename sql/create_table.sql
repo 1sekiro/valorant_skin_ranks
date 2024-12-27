@@ -57,3 +57,11 @@ FROM
     skin
 ORDER BY
     win_num DESC;
+
+CREATE TABLE vote_history (
+                              vote_id INT AUTO_INCREMENT PRIMARY KEY,
+                              winning_skin_id INT NOT NULL,
+                              losing_skin_id INT NOT NULL,
+                              FOREIGN KEY (winning_skin_id) REFERENCES skin(skin_id),
+                              FOREIGN KEY (losing_skin_id) REFERENCES skin(skin_id)
+);

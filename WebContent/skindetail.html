@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skin Details</title>
   <link href="common.css" rel="stylesheet">
+  <link href="skindetail.css" rel="stylesheet">
   <style>
     .detail-container {
       max-width: 800px;
@@ -108,11 +109,88 @@
       box-shadow: 0 4px 12px rgba(255, 70, 85, 0.3);
     }
 
-    .error {
-      color: #ff4655;
-      text-align: center;
-      font-size: 18px;
+    /* Vote history styles */
+    .history-section {
+      margin-top: 40px;
       padding: 20px;
+      background-color: rgba(31, 64, 104, 0.4);
+      border-radius: 12px;
+    }
+
+    .history-section h2 {
+      color: #ffffff;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .match-history {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .match-card {
+      background-color: rgba(22, 36, 71, 0.8);
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.2s;
+    }
+
+    .match-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .match-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .match-skin {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .match-skin img {
+      width: 240px;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .match-skin span {
+      color: #ffffff;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .vs {
+      color: #8f9aab;
+      font-weight: bold;
+    }
+
+    .match-result {
+      align-self: flex-end;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .match-result.won {
+      background-color: rgba(46, 204, 113, 0.2);
+      color: #2ecc71;
+    }
+
+    .match-result.lost {
+      background-color: rgba(231, 76, 60, 0.2);
+      color: #e74c3c;
     }
 
     @media (max-width: 768px) {
@@ -129,6 +207,15 @@
       .stats-grid {
         grid-template-columns: 1fr;
       }
+
+      .match-content {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .match-skin img {
+        width: 80px;
+      }
     }
   </style>
 </head>
@@ -139,60 +226,6 @@
   <div class="loading">Loading...</div>
 </div>
 
-<script>
-  async function fetchSkinDetails() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const skinName = urlParams.get('skinName');
-
-    if (!skinName) {
-      document.getElementById('skin-details').innerHTML = '<p class="error">No skin name provided.</p>';
-      return;
-    }
-
-    try {
-      const response = await fetch(`/valorant-skin-ranks/api/skin?skinName=${encodeURIComponent(skinName)}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch skin details.');
-      }
-      const skin = await response.json();
-
-      if (skin.error) {
-        document.getElementById('skin-details').innerHTML = `<p class="error">${skin.error}</p>`;
-        return;
-      }
-
-      document.getElementById('skin-details').innerHTML = `
-                    <div class="detail-header">
-                        <img class="skin-icon" src="${skin.icon}" alt="${skin.skin_name}">
-                        <div class="skin-info">
-                            <h1 class="skin-name">${skin.skin_name}</h1>
-                        </div>
-                    </div>
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">Wins</div>
-                            <div class="stat-value">${skin.win_num}</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Losses</div>
-                            <div class="stat-value">${skin.loss_num}</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Total Matches</div>
-                            <div class="stat-value">${skin.win_num + skin.loss_num}</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Win Rate</div>
-                            <div class="stat-value win-rate">${skin.win_rate}%</div>
-                        </div>
-                    </div>
-                `;
-    } catch (error) {
-      document.getElementById('skin-details').innerHTML = `<p class="error">${error.message}</p>`;
-    }
-  }
-
-  fetchSkinDetails();
-</script>
+<script src="skindetail.js"></script>
 </body>
 </html>

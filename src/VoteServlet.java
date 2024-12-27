@@ -112,45 +112,57 @@ public class VoteServlet extends HttpServlet {
         }
     }
 
-    @Override
 
+
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("application/json");
 
         JsonObject jsonRequest = JsonParser.parseReader(request.getReader()).getAsJsonObject();
-        int skinId = jsonRequest.get("skinId").getAsInt();
+        int winningSkinId = jsonRequest.get("skinId").getAsInt();
+        int losingSkinId = jsonRequest.get("otherSkinId").getAsInt();
 
         try (Connection connection = dataSource.getConnection()) {
-            String updateVoteQuery = "UPDATE skin SET win_num = win_num + 1 WHERE skin_id = ?";
-            PreparedStatement stmt = connection.prepareStatement(updateVoteQuery);
-            stmt.setInt(1, skinId);
+            connection.setAutoCommit(false); // Start transaction
 
-            int rowsUpdated = stmt.executeUpdate(); // Track rows updated
+            try {
+                // Update win count for the winning skin
+                String updateVoteQuery = "UPDATE skin SET win_num = win_num + 1 WHERE skin_id = ?";
+                PreparedStatement stmt = connection.prepareStatement(updateVoteQuery);
+                stmt.setInt(1, winningSkinId);
 
-            // Confirm update success
-            if (rowsUpdated > 0) {
-                response.setStatus(200);
-                try (PrintWriter out = response.getWriter()) {
+                int rowsUpdated = stmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    // Record the vote in vote_history
+                    String insertHistoryQuery = "INSERT INTO vote_history (winning_skin_id, losing_skin_id) VALUES (?, ?)";
+                    PreparedStatement historyStmt = connection.prepareStatement(insertHistoryQuery);
+                    historyStmt.setInt(1, winningSkinId);
+                    historyStmt.setInt(2, losingSkinId);
+                    historyStmt.executeUpdate();
+
+                    connection.commit(); // Commit transaction
+                    response.setStatus(200);
                     JsonObject successResponse = new JsonObject();
                     successResponse.addProperty("message", "Vote recorded successfully.");
-                    out.write(successResponse.toString());
-                }
-            } else {
-                response.setStatus(404); // Skin ID not found
-                try (PrintWriter out = response.getWriter()) {
+                    response.getWriter().write(successResponse.toString());
+                } else {
+                    connection.rollback();
+                    response.setStatus(404);
                     JsonObject errorResponse = new JsonObject();
                     errorResponse.addProperty("error", "Skin ID not found. Vote not recorded.");
-                    out.write(errorResponse.toString());
+                    response.getWriter().write(errorResponse.toString());
                 }
+            } catch (SQLException e) {
+                connection.rollback(); // Rollback on error
+                throw e;
+            } finally {
+                connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
             response.setStatus(500);
-            try (PrintWriter out = response.getWriter()) {
-                JsonObject errorResponse = new JsonObject();
-                errorResponse.addProperty("error", "Database error: " + e.getMessage());
-                out.write(errorResponse.toString());
-            }
+            JsonObject errorResponse = new JsonObject();
+            errorResponse.addProperty("error", "Database error: " + e.getMessage());
+            response.getWriter().write(errorResponse.toString());
         }
-    }
-
-}
+    }}
