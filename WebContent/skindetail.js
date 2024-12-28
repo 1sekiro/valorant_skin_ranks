@@ -21,78 +21,64 @@ async function fetchSkinDetails() {
     const skinName = urlParams.get('skinName');
 
     if (!skinName) {
-        console.error("Missing skinName parameter in URL");
         document.getElementById('skin-details').innerHTML = '<p class="error">No skin name provided.</p>';
         return;
     }
 
     try {
-        console.log('Fetching data for skin:', skinName);
-
-        // Fetch skin details
-        console.log('Fetching skin details...');
         const skinUrl = `/valorant-skin-ranks/api/skin?skinName=${encodeURIComponent(skinName)}`;
-        console.log('Skin URL:', skinUrl);
-        const skinResponse = await fetch(skinUrl);
-        console.log('Skin response status:', skinResponse.status);
-
-        // Fetch vote history
-        console.log('Fetching vote history...');
         const historyUrl = `/valorant-skin-ranks/api/vote-history?skinName=${encodeURIComponent(skinName)}`;
-        console.log('History URL:', historyUrl);
-        const historyResponse = await fetch(historyUrl);
-        console.log('History response status:', historyResponse.status);
+
+        const [skinResponse, historyResponse] = await Promise.all([
+            fetch(skinUrl),
+            fetch(historyUrl)
+        ]);
 
         if (!skinResponse.ok || !historyResponse.ok) {
             throw new Error(`Error fetching data: Skin status ${skinResponse.status}, History status ${historyResponse.status}`);
         }
 
-        const skin = await skinResponse.json();
-        console.log('Skin data:', skin);
+        const [skin, history] = await Promise.all([
+            skinResponse.json(),
+            historyResponse.json()
+        ]);
 
-        const history = await historyResponse.json();
-        console.log('History data:', history);
-
-        // Create the main skin details HTML
+        // Create the split layout HTML
         let detailsHtml = `
-            <div class="detail-header">
-                <img class="skin-icon" src="${skin.icon}" alt="${skin.skin_name}" 
-                     onerror="this.onerror=null; this.src='placeholder.png';">
-                <div class="skin-info">
+            <div class="skin-info-container">
+                <div class="detail-header">
+                    <img class="skin-icon" src="${skin.icon}" alt="${skin.skin_name}" 
+                         onerror="this.onerror=null; this.src='placeholder.png';">
                     <h1 class="skin-name">${skin.skin_name}</h1>
                 </div>
-            </div>
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-label">Wins</div>
-                    <div class="stat-value">${skin.win_num}</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Total Votes</div>
-                    <div class="stat-value">${skin.vote_count}</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Loss Count</div>
-                    <div class="stat-value">${skin.vote_count - skin.win_num}</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-label">Win Rate</div>
-                    <div class="stat-value win-rate">${skin.win_rate}%</div>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Wins</div>
+                        <div class="stat-value">${skin.win_num}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Total Votes</div>
+                        <div class="stat-value">${skin.vote_count}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Loss Count</div>
+                        <div class="stat-value">${skin.vote_count - skin.win_num}</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Win Rate</div>
+                        <div class="stat-value win-rate">${skin.win_rate}%</div>
+                    </div>
                 </div>
             </div>`;
 
-        // Add vote history section
+        // Add vote history section as separate column
         if (history.history && history.history.length > 0) {
-            console.log(`Adding ${history.history.length} match history items`);
             detailsHtml += `
                 <div class="history-section">
                     <h2>Recent Matches</h2>
                     <div class="match-history">`;
 
-            history.history.forEach((match, index) => {
-                console.log(`Processing match ${index}:`, match);
-
-                // Ensure win_rate is a valid number, default to 0 if not
+            history.history.forEach(match => {
                 const winRate = Number.isFinite(match.win_rate) ? match.win_rate : 0;
                 const inverseWinRate = Number.isFinite(match.win_rate) ? (100 - match.win_rate) : 0;
 
@@ -125,7 +111,6 @@ async function fetchSkinDetails() {
                     </div>
                 </div>`;
         } else {
-            console.log('No match history available');
             detailsHtml += `
                 <div class="history-section">
                     <h2>Recent Matches</h2>
@@ -135,10 +120,11 @@ async function fetchSkinDetails() {
 
         document.getElementById('skin-details').innerHTML = detailsHtml;
     } catch (error) {
-        console.error('Error:', error);
         document.getElementById('skin-details').innerHTML = `
-            <p class="error">Error loading skin details: ${error.message}</p>
-            <button onclick="fetchSkinDetails()" class="retry-button">Retry</button>
-        `;
+            <div class="skin-info-container">
+                <p class="error">Error loading skin details: ${error.message}</p>
+                <button onclick="fetchSkinDetails()" class="retry-button">Retry</button>
+            </div>`;
     }
 }
+
