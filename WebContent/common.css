@@ -373,6 +373,8 @@ td, th {
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
     max-width: 600px;
+    position: relative; /* Add this */
+    overflow: hidden;
 }
 
 .skin:hover {
@@ -505,5 +507,59 @@ td, th {
 @media (max-width: 1200px) {
     .trending-skins {
         grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(31, 64, 104, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    z-index: 5;
+}
+
+
+.vs-container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    background-color: #ff4655;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(255, 70, 85, 0.4);
+    z-index: 100; /* Higher z-index */
+}
+
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #fff;
+    border-bottom-color: #ff4655;
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

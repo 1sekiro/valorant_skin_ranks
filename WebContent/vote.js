@@ -64,6 +64,12 @@ $(document).ready(() => {
     });
 
     function fetchRandomSkins(weapon = null) {
+        // Show loading overlay, hide only skins (not VS)
+        $(".loading-overlay").show();
+        $(".skin-clickable").hide();
+
+        // VS container stays visible
+
         let url = "/valorant-skin-ranks/api/vote";
         if (weapon) {
             url += `?weapon=${weapon}`;
@@ -74,21 +80,52 @@ $(document).ready(() => {
             method: "GET",
             success: function (data) {
                 if (data.skin1 && data.skin2) {
-                    $("#skin1-icon").attr("src", data.skin1.icon);
-                    $("#skin1-name").text(data.skin1.name);
-                    $("#vote-skin1").attr("data-skin-id", data.skin1.id);
-                    // Add this line
-                    $("#skin1-icon").closest(".skin-clickable").attr("data-skin-id", data.skin1.id);
+                    // Preload both images
+                    const img1 = new Image();
+                    const img2 = new Image();
+                    let loadedImages = 0;
 
-                    $("#skin2-icon").attr("src", data.skin2.icon);
-                    $("#skin2-name").text(data.skin2.name);
-                    $("#vote-skin2").attr("data-skin-id", data.skin2.id);
-                    // Add this line
-                    $("#skin2-icon").closest(".skin-clickable").attr("data-skin-id", data.skin2.id);
+                    function showContent() {
+                        $("#skin1-icon").attr("src", data.skin1.icon);
+                        $("#skin1-name").text(data.skin1.name);
+                        $("#vote-skin1").attr("data-skin-id", data.skin1.id);
+                        $(".skin-clickable[data-vote-id='1']").attr("data-skin-id", data.skin1.id);
+
+                        $("#skin2-icon").attr("src", data.skin2.icon);
+                        $("#skin2-name").text(data.skin2.name);
+                        $("#vote-skin2").attr("data-skin-id", data.skin2.id);
+                        $(".skin-clickable[data-vote-id='2']").attr("data-skin-id", data.skin2.id);
+
+                        // Hide loading, show skins
+                        $(".loading-overlay").hide();
+                        $(".skin-clickable").fadeIn(300);
+                    }
+
+                    // Set up image load handlers
+                    [img1, img2].forEach(img => {
+                        img.onload = () => {
+                            loadedImages++;
+                            if (loadedImages === 2) {
+                                showContent();
+                            }
+                        };
+                        img.onerror = () => {
+                            loadedImages++;
+                            if (loadedImages === 2) {
+                                showContent();
+                            }
+                        };
+                    });
+
+                    // Start loading images
+                    img1.src = data.skin1.icon;
+                    img2.src = data.skin2.icon;
                 }
             },
             error: function (error) {
                 console.error("Failed to fetch skins:", error);
+                $(".loading-overlay").hide();
+                $(".skin-clickable").show();
             },
         });
     }
