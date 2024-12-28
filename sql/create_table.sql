@@ -7,7 +7,6 @@ CREATE DATABASE skindb;
 -- Use the database
 USE skindb;
 
-
 -- Create Weapon Table
 CREATE TABLE weapon (
                         weapon_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -44,11 +43,12 @@ CREATE TABLE skin (
                       weapon_id INT NOT NULL,
                       win_num INT DEFAULT 0,
                       vote_count INT NOT NULL DEFAULT 0,
+                      version INT DEFAULT 1, -- Version column for optimistic locking
                       icon VARCHAR(255),
                       FOREIGN KEY (weapon_id) REFERENCES weapon(weapon_id)
 );
 
--- Create Rank Table
+-- Create Rank Table (View)
 CREATE VIEW rank_table AS
 SELECT
     skin_id,
@@ -58,10 +58,13 @@ FROM
 ORDER BY
     win_num DESC;
 
+-- Create Vote History Table
 CREATE TABLE vote_history (
                               vote_id INT AUTO_INCREMENT PRIMARY KEY,
                               winning_skin_id INT NOT NULL,
                               losing_skin_id INT NOT NULL,
-                              FOREIGN KEY (winning_skin_id) REFERENCES skin(skin_id),
-                              FOREIGN KEY (losing_skin_id) REFERENCES skin(skin_id)
+                              FOREIGN KEY (winning_skin_id) REFERENCES skin(skin_id) ON DELETE CASCADE,
+                              FOREIGN KEY (losing_skin_id) REFERENCES skin(skin_id) ON DELETE CASCADE
 );
+
+

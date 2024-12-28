@@ -126,12 +126,31 @@ public class VoteServlet extends HttpServlet {
             connection.setAutoCommit(false); // Start transaction
 
             try {
-                // Update win count for the winning skin
-                String updateVoteQuery = "UPDATE skin SET win_num = win_num + 1 WHERE skin_id = ?";
-                PreparedStatement stmt = connection.prepareStatement(updateVoteQuery);
-                stmt.setInt(1, winningSkinId);
+                // Fetch the current version of the winning skin
+                String selectVersionQuery = "SELECT version FROM skin WHERE skin_id = ?";
+                PreparedStatement selectStmt = connection.prepareStatement(selectVersionQuery);
+                selectStmt.setInt(1, winningSkinId);
+                ResultSet resultSet = selectStmt.executeQuery();
 
-                int rowsUpdated = stmt.executeUpdate();
+                if (!resultSet.next()) {
+                    connection.rollback();
+                    response.setStatus(404);
+                    JsonObject errorResponse = new JsonObject();
+                    errorResponse.addProperty("error", "Winning skin not found.");
+                    response.getWriter().write(errorResponse.toString());
+                    return;
+                }
+
+                int currentVersion = resultSet.getInt("version");
+
+                // Update win count and version with optimistic locking
+                String updateVoteQuery = "UPDATE skin SET win_num = win_num + 1, vote_count = vote_count + 1, version = version + 1 " +
+                        "WHERE skin_id = ? AND version = ?";
+                PreparedStatement updateStmt = connection.prepareStatement(updateVoteQuery);
+                updateStmt.setInt(1, winningSkinId);
+                updateStmt.setInt(2, currentVersion);
+
+                int rowsUpdated = updateStmt.executeUpdate();
 
                 if (rowsUpdated > 0) {
                     // Record the vote in vote_history
@@ -148,9 +167,9 @@ public class VoteServlet extends HttpServlet {
                     response.getWriter().write(successResponse.toString());
                 } else {
                     connection.rollback();
-                    response.setStatus(404);
+                    response.setStatus(409); // Conflict due to version mismatch
                     JsonObject errorResponse = new JsonObject();
-                    errorResponse.addProperty("error", "Skin ID not found. Vote not recorded.");
+                    errorResponse.addProperty("error", "Optimistic locking failed. Please retry.");
                     response.getWriter().write(errorResponse.toString());
                 }
             } catch (SQLException e) {
