@@ -11,6 +11,10 @@ $(document).ready(() => {
         window.location.href = "/valorant-skin-ranks/rank.jsp";
     });
 
+    $("#logo-button").click(() => {
+        window.location.href = "/valorant-skin-ranks/vote.html";
+    });
+
     // Modal handling
     const modal = $("#weapon-modal");
     const filterBtn = $("#filter-button");
@@ -73,10 +77,14 @@ $(document).ready(() => {
                     $("#skin1-icon").attr("src", data.skin1.icon);
                     $("#skin1-name").text(data.skin1.name);
                     $("#vote-skin1").attr("data-skin-id", data.skin1.id);
+                    // Add this line
+                    $("#skin1-icon").closest(".skin-clickable").attr("data-skin-id", data.skin1.id);
 
                     $("#skin2-icon").attr("src", data.skin2.icon);
                     $("#skin2-name").text(data.skin2.name);
                     $("#vote-skin2").attr("data-skin-id", data.skin2.id);
+                    // Add this line
+                    $("#skin2-icon").closest(".skin-clickable").attr("data-skin-id", data.skin2.id);
                 }
             },
             error: function (error) {
@@ -114,4 +122,17 @@ $(document).ready(() => {
             },
         });
     }
+
+    $("#vote-container").on("click", ".skin-clickable", function() {
+        const voteId = $(this).data("vote-id");
+        if (voteId === 1) {
+            const winningSkinId = $(this).attr("data-skin-id");
+            const losingSkinId = $(".skin-clickable[data-vote-id='2']").attr("data-skin-id");
+            voteForSkin(winningSkinId, losingSkinId);
+        } else {
+            const winningSkinId = $(this).attr("data-skin-id");
+            const losingSkinId = $(".skin-clickable[data-vote-id='1']").attr("data-skin-id");
+            voteForSkin(winningSkinId, losingSkinId);
+        }
+    });
 });

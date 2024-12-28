@@ -1,3 +1,21 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // Fetch skin details
+    fetchSkinDetails();
+
+    // Navigation button handlers
+    document.getElementById('logo-button').addEventListener('click', () => {
+        window.location.href = "/valorant-skin-ranks/vote.html";
+    });
+
+    document.getElementById('vote-button').addEventListener('click', () => {
+        window.location.href = "/valorant-skin-ranks/vote.html";
+    });
+
+    document.getElementById('rank-button').addEventListener('click', () => {
+        window.location.href = "/valorant-skin-ranks/rank.jsp";
+    });
+});
+
 async function fetchSkinDetails() {
     const urlParams = new URLSearchParams(window.location.search);
     const skinName = urlParams.get('skinName');
@@ -124,6 +142,3 @@ async function fetchSkinDetails() {
         `;
     }
 }
-
-// Initialize the page
-document.addEventListener('DOMContentLoaded', fetchSkinDetails);

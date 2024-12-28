@@ -9,6 +9,10 @@ $(document).ready(() => {
         window.location.href = "/valorant-skin-ranks/rank.jsp";
     });
 
+    $("#logo-button").click(() => {
+        window.location.href = "/valorant-skin-ranks/vote.html";
+    });
+
     function loadWeapons() {
         $.ajax({
             url: "/valorant-skin-ranks/api/weapons",

@@ -9,8 +9,13 @@
 <body>
 <header>
     <div id="nav-buttons">
-        <button id="vote-button" class="nav-btn">Vote</button>
-        <button id="rank-button" class="nav-btn">Ranks</button>
+        <button id="logo-button" class="nav-btn logo-btn">
+            <span class="va-text">VA</span> SkinRanks
+        </button>
+        <div class="nav-right">
+            <button id="vote-button" class="nav-btn">Vote</button>
+            <button id="rank-button" class="nav-btn">Ranks</button>
+        </div>
     </div>
 </header>
 <div class="container mt-5">
@@ -18,7 +23,12 @@
 
     <!-- Add filter button container -->
     <div class="filter-container">
-        <button id="filter-button" class="filter-btn">Filter</button>
+        <button id="filter-button" class="filter-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="filter-icon">
+                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+            </svg>
+            Filter
+        </button>
     </div>
 
     <!-- Add weapon filter modal -->
