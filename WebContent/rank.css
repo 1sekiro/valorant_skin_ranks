@@ -60,3 +60,26 @@ td, th {
     height: auto;
     border-radius: 5px;
 }
+footer p {
+    margin: 10px auto; /* Auto margin centers the text */
+    font-size: 14px; /* Smaller font for readability */
+    line-height: 1.5; /* Add line spacing for better readability */
+    max-width: 80%; /* Center text with controlled width */
+    text-align: center; /* Ensure text is centered */
+}
+
+.footer-links {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.footer-links a {
+    color: #ffffff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+

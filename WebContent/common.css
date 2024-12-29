@@ -1,11 +1,11 @@
 /* Global styles */
 body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: linear-gradient(rgba(15, 25, 35, 0.9), rgba(31, 35, 38, 0.9)), /* Dark overlay */
+    background: linear-gradient(rgba(15, 25, 35, 0.9), rgba(31, 35, 38, 0.9)),
     url('https://static0.gamerantimages.com/wordpress/wp-content/uploads/2020/05/v1.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Keeps the background fixed while scrolling */
+    background-attachment: fixed;
     background-repeat: no-repeat;
     color: #fff;
     margin: 0;
@@ -562,4 +562,55 @@ td, th {
     100% {
         transform: rotate(360deg);
     }
+}
+footer {
+    background-color: #162447;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    position: fixed;  /* Changed to fixed */
+    bottom: 0;       /* Added to stick to bottom */
+    left: 0;         /* Added to ensure full width alignment */
+}
+
+footer p {
+    margin: 10px auto;
+    font-size: 14px;
+    line-height: 1.5;
+    max-width: 80%;
+    text-align: center;
+}
+
+.footer-links {
+    text-align: center;
+    padding: 10px 0;
+}
+
+/* More specific selectors to override any default styles */
+.footer-links a {
+    color: #ffffff !important;
+    text-decoration: none;
+    margin: 0 10px;
+}
+footer .footer-links a,
+.footer-container .footer-links a {
+    color: #ffffff !important;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.footer-links a:hover,
+footer .footer-links a:hover,
+.footer-container .footer-links a:hover {
+    text-decoration: underline;
+    color: #ffffff !important;
+}
+
+/* Additional specificity for link states */
+.footer-links a:link,
+.footer-links a:visited,
+.footer-links a:active {
+    color: #ffffff !important;
 }

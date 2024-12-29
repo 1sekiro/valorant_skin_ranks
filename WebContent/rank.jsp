@@ -52,6 +52,15 @@
         </tbody>
     </table>
 </div>
+
+<!-- Footer Section -->
+<footer>
+    <div class="footer-links">
+        <a href="PrivacyPolicy.html">Privacy Policy</a> |
+        <a href="TermsofServices.html">Terms of Service</a>
+    </div>
+</footer>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="rank.js"></script>
 </body>
