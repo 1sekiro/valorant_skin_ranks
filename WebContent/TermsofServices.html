@@ -71,17 +71,32 @@
       position: absolute;
       left: 0;
     }
+
+    /* Navigation link styles */
+    .nav-btn {
+      text-decoration: none;
+      display: inline-block;
+      border: none;
+    }
+
+    .nav-right a {
+      text-decoration: none;
+    }
+
+    #nav-buttons a {
+      color: white;
+    }
   </style>
 </head>
 <body>
 <header>
   <div id="nav-buttons">
-    <button id="logo-button" class="nav-btn logo-btn">
+    <a href="vote.html" id="logo-button" class="nav-btn logo-btn">
       <span class="va-text">VA</span> SkinRanks
-    </button>
+    </a>
     <div class="nav-right">
-      <button id="vote-button" class="nav-btn">Vote</button>
-      <button id="rank-button" class="nav-btn">Ranks</button>
+      <a href="vote.html" id="vote-button" class="nav-btn">Vote</a>
+      <a href="rank.html" id="rank-button" class="nav-btn">Ranks</a>
     </div>
   </div>
 </header>
